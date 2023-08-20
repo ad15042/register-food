@@ -1,0 +1,33 @@
+/* 
+
+商品一覧画面
+
+*/
+
+/* テーブル全体 */
+table {
+    width: auto;
+    height: auto;
+}
+
+/* 見出し部 */
+th {
+    padding: 10px 20px;
+}
+
+/* データ部 */
+td {
+    padding: 10px 20px;
+}
+
+/* ボタンの装飾 */
+.btn {
+    border-radius: 5px;
+    background-color: lightblue;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+  }
+
+
+

@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    env_file: .env
+    build:
+      # docker-compose.ymlがあるルートディレクトリを指す（必須）
+      context: .
+      dockerfile: src/db/db.Dockerfile
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      # ハイフンはデフォルト値
+    ports:
+      - "${DB_EXPOSE_PORT:-54320}:${DB_PORT:-5432}"
+
+  app:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: src/app/app.Dockerfile
+    # command: python src/manage.py runserver 0.0.0.0:"${APP_PORT:-5000}"
+    volumes:
+      - .:/app
+      # コンテナが起動後すぐに落ちないようにする設定
+    tty: true
+    ports:
+      - "${APP_EXPOSE_PORT:-50000}:${APP_PORT:-5000}"
+    depends_on:
+      - db
+
+volumes:
+  db-data:

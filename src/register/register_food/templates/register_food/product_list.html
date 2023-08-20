@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'register/style.css' %}">
+    <title>productList</title>
+  </head>
+  <form method="post" id="mainForm" action="">
+    <!-- アクションタイプを保存するhiddenパラメータ -->
+    <input type="hidden" id="actionType" name="action_type" value="">
+    <!-- チェックボックスで選択された商品データを保存するパラメータ -->
+    <!-- <input type="hidden" id="selectedProducts" name="selected_products" value=""> -->
+  {% csrf_token%}
+  <body>
+    <h1>商品一覧</h1>
+    <!-- 表の枠線を設定する -->
+    <table border="1"> 
+        <tr>
+            <th><input type="checkbox" name="headCheck" id="headCheck" onClick="checkAll()" /></th>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>購入場所</th>
+            <th>購入日</th>
+            <th>食事形式</th>
+            <th>カテゴリ</th>
+            <th>後悔度</th>
+        </tr>
+        {%for product in products%}
+        <tr>
+            <td><input type="checkbox" id="datachk" name="selected_products" value="{{ product.id }}" /></td>
+            <td>{{product.product_name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.place}}</td>
+            <td>{{product.payment_date}}</td>
+            <td>
+              <!-- 食事形式が１の場合 -->
+              {% if product.meal_format == 1%}
+                内食
+              {% else %}
+              <!-- 食事形式が１以外の場合 -->
+                外食
+              {% endif %}
+            </td>
+            <td>{{product.category}}</td>
+            <td>{{product.degree_regret}}</td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+      <!-- 登録ボタン -->
+      <a href="{% url 'register_food:entryform' %}" class="btn">新規登録</a>
+      <!-- 更新ボタン -->            
+      <button type="button" id="updateButton" data-update-url="{% url 'register_food:update' %}">更新</button>
+      <!-- 削除ボタン -->            
+      <button type="button" id="deleteButton" data-delete-url="{% url 'register_food:delete' %}">削除</button>
+    </div>
+
+
+
+    <!-- ここにJavaScriptを読み込むコード -->
+    <script src="{% static 'register/register.js' %}"></script>
+  </body>
+</form>
+</html>
