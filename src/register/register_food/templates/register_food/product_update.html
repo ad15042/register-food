@@ -1,0 +1,50 @@
+<h1>更新</h1>
+
+<form method="post" action="{% url 'register_food:update_confirmation' %}">
+    {% csrf_token %}
+
+    <p>
+        更新対象の項目を編集して、実行ボタンを押下してください
+    </p>
+    <!-- 商品名 -->
+
+    {%for product in selected_products%}
+    <label for="product_name">商品名:</label>
+    <input type="text" name="product_name" id="product_name" value="{{ product.product_name }}" required>
+    <br>
+    <!-- 価格 -->
+    <label for="price">価格:</label>
+    <input type="number" name="price" id="price" min="0" value="{{ product.price }}" required>
+    <br>
+    <!-- 場所 -->
+    <label for="place">場所:</label>
+    <input type="text" name="place" id="place" value="{{ product.place }}" required>
+    <br>
+    <!-- 日にち -->
+    <label for="payment_date">日にち:</label>
+    <input type="date" name="payment_date" id="payment_date" value="{{ product.payment_date }}" required>
+    <br>
+    <!-- 食事形式 -->
+    <label for="meal_format">食事形式:</label>
+    <select name="meal_format" required>
+    <option value="">選択してください</option>
+    <option value="1">内食</option>
+    <option value="0">外食</option>
+    </select>
+    <br>
+    <!-- カテゴリ -->
+    <label for="category">カテゴリ:</label>
+    <textarea name="category" id="category" required>{{ product.category }}</textarea>
+    <br>
+    <!-- 後悔度 -->
+    <label for="degree_regret">後悔度:</label>
+    <input type="number" name="degree_regret" id="degree_regret" step="10" min="0" value="{{ product.degree_regret }}" required>
+    
+    {% endfor %}
+    
+
+    <div>
+    <a href="{% url 'register_food:product_list' %}">戻る</a>
+    <input type="submit" name="confirm_update" value="実行">
+    </div>
+</form>

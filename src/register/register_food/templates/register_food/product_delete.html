@@ -1,0 +1,27 @@
+<h1>削除</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        以下の商品を削除してもよろしいですか？
+    </p>
+    <table border="1"> 
+        <tr>
+            <th>商品名</th>
+            <th>購入場所</th>
+            <th>購入日</th>
+        </tr>
+        {%for product in selected_products%}
+        <tr>
+            <td>{{product.product_name}}</td>
+            <td>{{product.place}}</td>
+            <td>{{product.payment_date}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+
+    <a href="{% url 'register_food:product_list' %}">戻る</a>
+    <input type="submit" name="confirm_delete" value="削除">
+</form>
